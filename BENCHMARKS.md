@@ -2,8 +2,8 @@
 
 The same frontend built twice, measured on 2026-11-03:
 
-- **Angular**: Angular 22 with ng-zorro 22, standalone components, signals and NgRx Signal Store, lazy `loadComponent` routes. It is the root of this repository.
-- **Inglorious**: `@inglorious/web` 6.16 with `@inglorious/ui` 9.13, `@inglorious/store` 12.2 and `@inglorious/i18n` 2.0, lit-html templates, one lazily loaded chunk per page. It lives in `inglorious/`.
+- **Angular**: Angular 22 with ng-zorro 22, standalone components, signals and NgRx Signal Store, lazy `loadComponent` routes. It is [FatturaFacile/web-frontend](https://github.com/FatturaFacile/web-frontend).
+- **Inglorious**: `@inglorious/web` 6.16 with `@inglorious/ui` 9.13, `@inglorious/store` 12.2 and `@inglorious/i18n` 2.0, lit-html templates, one lazily loaded chunk per page. It is this repository.
 
 Both apps cover the same screens with the same API and translations, under the same constraints: strict TypeScript, WCAG AA, linting. Where Angular faked data or success (backups, alerts, the QR-bill form...), the Inglorious port reports failures instead; that makes it slightly bigger, not smaller.
 
