@@ -1,12 +1,14 @@
 // Bundle sizes of both production builds, raw, gzip and brotli.
 // Initial: what index.html loads (scripts, module preloads, stylesheets)
 // and the JS those import statically. All: every .js and .css but the
-// service worker's. Build both apps first.
+// service worker's. Build this app first, and the Angular app too when
+// ANGULAR_DIR is set; otherwise its deployed build is measured.
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs"
 import { dirname, join, resolve } from "node:path"
 import { brotliCompressSync, constants, gzipSync } from "node:zlib"
 
-import { ANGULAR_DIST, INGLORIOUS_DIST } from "./paths.mjs"
+import { angularBuild } from "./angular-build.mjs"
+import { INGLORIOUS_DIST } from "./paths.mjs"
 
 const KB = 1024
 const GZIP_LEVEL = 9
@@ -16,8 +18,11 @@ const COLUMN_WIDTH = 10
 const SERVICE_WORKER =
   /^(sw|ngsw-worker|safety-worker|worker-basic|workbox-.*)(\.min)?\.js$/
 
+const angular = await angularBuild()
+console.log(`Angular build: ${angular.source}`)
+
 for (const [label, dist] of [
-  ["Angular", ANGULAR_DIST],
+  ["Angular", angular.dist],
   ["Inglorious", INGLORIOUS_DIST],
 ]) {
   report(label, dist)

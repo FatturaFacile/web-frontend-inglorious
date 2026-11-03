@@ -4,7 +4,9 @@
 import { readdirSync, readFileSync, statSync } from "node:fs"
 import { join } from "node:path"
 
-import { ANGULAR, INGLORIOUS } from "./paths.mjs"
+import { INGLORIOUS, requireAngularSource } from "./paths.mjs"
+
+const ANGULAR = requireAngularSource()
 
 // Angular's feature folders, and the Inglorious page folders that port them.
 const FEATURES = {

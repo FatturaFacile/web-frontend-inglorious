@@ -1,11 +1,14 @@
 // Lighthouse on both apps' login pages: five desktop and five mobile runs
-// each, medians reported. Build both apps first; needs Google Chrome.
+// each, medians reported. Build this app first, and the Angular app too when
+// ANGULAR_DIR is set; otherwise a copy of its deployed build is served, with
+// files it loads at runtime fetched from there. Needs Google Chrome.
 import { spawn, spawnSync } from "node:child_process"
 import { mkdtempSync, readFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
 
-import { ANGULAR_DIST, INGLORIOUS_DIST } from "./paths.mjs"
+import { angularBuild } from "./angular-build.mjs"
+import { ANGULAR_DIST, ANGULAR_URL, INGLORIOUS_DIST } from "./paths.mjs"
 
 const LIGHTHOUSE = "lighthouse@12.8.2"
 const RUNS = 5
@@ -13,8 +16,15 @@ const KB = 1024
 const PERCENT = 100
 const SERVER_START_MS = 1000
 const CLS_DECIMALS = 3
+const angular = await angularBuild()
+console.log(`Angular build: ${angular.source}`)
 const APPS = [
-  { name: "Angular", dist: ANGULAR_DIST, port: 4301 },
+  {
+    name: "Angular",
+    dist: angular.dist,
+    port: 4301,
+    origin: ANGULAR_DIST ? undefined : ANGULAR_URL,
+  },
   { name: "Inglorious", dist: INGLORIOUS_DIST, port: 4302 },
 ]
 const FORM_FACTORS = {
@@ -23,11 +33,12 @@ const FORM_FACTORS = {
 }
 
 const out = mkdtempSync(join(tmpdir(), "lighthouse-"))
-const servers = APPS.map(({ dist, port }) =>
+const servers = APPS.map(({ dist, port, origin }) =>
   spawn(process.execPath, [
     join(import.meta.dirname, "serve.mjs"),
     dist,
     String(port),
+    ...(origin ? [origin] : []),
   ]),
 )
 await new Promise((resolve) => setTimeout(resolve, SERVER_START_MS))

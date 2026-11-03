@@ -1,11 +1,13 @@
 // Dev server start-up: the time until each server says it is ready, and
 // until it serves the page and its entry module (Vite compiles on request).
-// Run once after deleting .angular/cache and inglorious/node_modules/.vite
+// Run once after deleting ANGULAR_DIR's .angular/cache and node_modules/.vite
 // for a cold start, and again for a warm one.
 import { spawn } from "node:child_process"
 import { stripVTControlCharacters } from "node:util"
 
-import { ANGULAR, INGLORIOUS } from "./paths.mjs"
+import { INGLORIOUS, requireAngularSource } from "./paths.mjs"
+
+const ANGULAR = requireAngularSource()
 
 const TIMEOUT_MS = 180_000
 const SERVERS = [

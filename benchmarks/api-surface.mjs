@@ -3,7 +3,9 @@
 import { readdirSync, readFileSync, statSync } from "node:fs"
 import { join } from "node:path"
 
-import { ANGULAR, INGLORIOUS } from "./paths.mjs"
+import { INGLORIOUS, requireAngularSource } from "./paths.mjs"
+
+const ANGULAR = requireAngularSource()
 
 const IMPORT =
   /import\s+(type\s+)?(?:(\w+)\s*,?\s*)?(?:\{([^}]*)\})?\s*from\s*["']([^"']+)["']/g

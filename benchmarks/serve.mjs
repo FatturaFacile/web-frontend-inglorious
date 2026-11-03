@@ -1,10 +1,18 @@
-// Usage: node serve.mjs <dist dir> <port>
+// Usage: node serve.mjs <dist dir> <port> [origin]
 // Serves a production build as a CDN would: brotli or gzip, a fallback to
 // index.html for client routes, long caching for hashed files. The API
 // answers as for a visitor who is not signed in, so no backend is involved.
-import { existsSync, readFileSync, statSync } from "node:fs"
+// With an origin, a file missing from the dist dir is fetched from there once
+// and then served like the others (for a partial copy of a deployed build).
+import {
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  statSync,
+  writeFileSync,
+} from "node:fs"
 import { createServer } from "node:http"
-import { extname, join } from "node:path"
+import { dirname, extname, join } from "node:path"
 import { brotliCompressSync, gzipSync } from "node:zlib"
 
 const UNAUTHORIZED = 401
@@ -26,10 +34,10 @@ const TYPES = {
 const COMPRESSIBLE = /\.(html|js|css|json|svg|webmanifest|txt)$/
 const HASHED = /[-.][\w-]{8,}\.(js|css|woff2)$/
 
-const [root, port] = process.argv.slice(2)
+const [root, port, origin] = process.argv.slice(2)
 const cache = new Map()
 
-createServer((request, response) => {
+createServer(async (request, response) => {
   const { pathname } = new URL(request.url, "http://localhost")
 
   if (pathname.startsWith("/sanctum")) {
@@ -44,6 +52,8 @@ createServer((request, response) => {
   }
 
   let file = join(root, decodeURIComponent(pathname))
+  if (origin && extname(file) && !existsSync(file))
+    await download(new URL(pathname, origin), file)
   if (!existsSync(file) || statSync(file).isDirectory())
     file = join(root, "index.html")
 
@@ -72,6 +82,13 @@ createServer((request, response) => {
 }).listen(Number(port), () =>
   console.log(`Serving ${root} on http://localhost:${port}`),
 )
+
+async function download(url, file) {
+  const remote = await fetch(url)
+  if (!remote.ok) return
+  mkdirSync(dirname(file), { recursive: true })
+  writeFileSync(file, Buffer.from(await remote.arrayBuffer()))
+}
 
 function encode(buffer, encoding) {
   if (encoding === "br") return brotliCompressSync(buffer)
