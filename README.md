@@ -109,6 +109,13 @@ Set these through a `.env.local` file or the environment:
 
 Most smoke tests ([src/app.test.ts](src/app.test.ts)) start the whole app in jsdom against a stubbed `fetch` and use it the way a user would.
 
+## Deployment
+
+Every push to `main` runs [.github/workflows/deploy.yml](.github/workflows/deploy.yml): lint, typecheck, tests and build, then the build goes live at **https://inglorious.fatturafacile.eu**.
+
+- The site is served by the dev stack on the VPS (see `deploy/dev/` in the web-api repo), with the dev API on the same origin (`/api`, `/sanctum`), so the Sanctum cookies are first-party.
+- Secrets live in the GitHub Environment `inglorious` (`DEPLOY_SSH_HOST`, `DEPLOY_SSH_USER`, `DEPLOY_SSH_KEY`, `DEPLOY_SSH_KNOWN_HOSTS`). The SSH key is restricted on the server to [deploy/server-deploy.sh](deploy/server-deploy.sh), which only replaces the site files.
+
 ## Project structure
 
 ```
