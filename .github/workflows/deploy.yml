@@ -1,0 +1,72 @@
+name: Deploy
+
+# Every push to main: lint, typecheck, tests and build, then publish to https://inglorious.fatturafacile.eu
+# (static files in ~/fatturafacile-dev/inglorious on the VPS, served by the dev stack of web-api deploy/dev/
+# together with the dev API). The SSH key can only run deploy/server-deploy.sh on the server.
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: inglorious-deploy
+  cancel-in-progress: false
+
+permissions: {}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: inglorious
+      url: https://inglorious.fatturafacile.eu
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+        with:
+          run_install: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 26
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Tests
+        run: pnpm test
+
+      - name: Build
+        run: pnpm build
+
+      - name: SSH setup
+        env:
+          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.DEPLOY_SSH_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_ed25519
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/id_ed25519
+
+      # The server side (forced command) unpacks the archive and swaps the site contents
+      - name: Deploy
+        env:
+          TARGET: ${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }}
+        run: |
+          tar czf - -C dist . | ssh "$TARGET"
+          curl -fsS -o /dev/null https://inglorious.fatturafacile.eu/
