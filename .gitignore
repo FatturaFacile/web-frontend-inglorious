@@ -51,3 +51,7 @@ lerna-debug.log*
 # Agent skills, installed by the skills CLI. skills-lock.json records them:
 # restore with `pnpm dlx skills experimental_install`.
 .agents/
+
+.claude-build/
+.claude/
+
