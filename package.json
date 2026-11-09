@@ -27,7 +27,7 @@
     "@iconify-icons/material-symbols": "^2.0.6",
     "@inglorious/i18n": "^2.0.0",
     "@inglorious/store": "^12.2.0",
-    "@inglorious/ui": "^9.13.0",
+    "@inglorious/ui": "^9.15.4",
     "@inglorious/web": "^6.16.0"
   },
   "devDependencies": {
