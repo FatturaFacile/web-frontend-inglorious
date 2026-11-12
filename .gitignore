@@ -53,4 +53,5 @@ lerna-debug.log*
 .agents/
 
 .claude-build/
-.claude/
+.claude/settings.local.json
+.claude/*.local.md
