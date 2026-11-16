@@ -218,8 +218,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       '@iconify-icons/material-symbols':
-        specifier: ^2.0.6
-        version: 2.0.8
+        specifier: ^2.0.11
+        version: 2.0.11
       '@inglorious/i18n':
         specifier: ^2.0.0
         version: 2.0.0(@typescript/typescript6@6.0.2)
@@ -918,8 +918,8 @@ packages:
   '@iconify-icons/fa7-solid@2.0.0':
     resolution: {integrity: sha512-V5S72tmzV9Un0gTv9hX0b+s2UaLmBtsG7hqFRYE7NROcKzhomlADAXx11OSg1R+oZ/w/1toHfNdx5W9zfwgYiQ==}
 
-  '@iconify-icons/material-symbols@2.0.8':
-    resolution: {integrity: sha512-+aH+hhGSACN4LjJPzgrmVVXpL99nJ7jVV+zOUGmu4HPwXafRCnYnU64TcLlhRv2R4zmQckD0YHmIcApc0h8rgA==}
+  '@iconify-icons/material-symbols@2.0.11':
+    resolution: {integrity: sha512-nqlHH2Ca+grSy9Mc/uO5hPSiTdk2M/o0w41kA3Zxzqjq/l/6YorMxeMfJxuTYZjW2WAMZTVqVrr84iLMVihB4g==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -4095,7 +4095,7 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@iconify-icons/material-symbols@2.0.8':
+  '@iconify-icons/material-symbols@2.0.11':
     dependencies:
       '@iconify/types': 2.0.0
 
