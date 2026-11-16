@@ -35,7 +35,7 @@
     "@inglorious/vite-plugin-hmr": "^1.1.0",
     "@types/node": "^26.6.6",
     "@typescript-eslint/eslint-plugin": "^8.72.0",
-    "@typescript-eslint/parser": "^8.72.0",
+    "@typescript-eslint/parser": "^8.72.2",
     "@typescript/native": "npm:typescript@^7.0.2",
     "@vite-pwa/assets-generator": "^2.0.0",
     "eslint": "^10.13.0",
