@@ -221,8 +221,8 @@ importers:
         specifier: ^2.0.6
         version: 2.0.8
       '@inglorious/i18n':
-        specifier: ^2.0.0
-        version: 2.0.0(@typescript/typescript6@6.0.2)
+        specifier: ^2.1.0
+        version: 2.1.0(@typescript/typescript6@6.0.2)
       '@inglorious/store':
         specifier: ^12.2.0
         version: 12.2.0(@inglorious/utils@5.4.0)
@@ -1106,8 +1106,8 @@ packages:
       eslint-plugin-tailwindcss:
         optional: true
 
-  '@inglorious/i18n@2.0.0':
-    resolution: {integrity: sha512-XPHYKHJC0YPupZntqZvgB6Wff8ox4nXzrtdq2cKUos9OcqQRHSMC39UCsvYdo+voT37paqXWVdth90jXw2xqLA==}
+  '@inglorious/i18n@2.1.0':
+    resolution: {integrity: sha512-BBs+9mJo6t3nNHokiWMHYfGneQFmBvgwAbOiyW9ixOMCM9x1ee9GKJXpY2Kb5eTPa3Isnk0G98pm08m75MKNYg==}
     engines: {node: '>= 26'}
 
   '@inglorious/store@12.2.0':
@@ -2279,8 +2279,9 @@ packages:
       '@swc/core':
         optional: true
 
-  i18next@26.6.0:
-    resolution: {integrity: sha512-jpb1n5386s9mbBLNF6tSNIVhbBUUNiNeDyjWte+uxHP/Wr+CEy7WBM8q29TkfQ46VbwKeJFYdQJK3pSUhLp4CQ==}
+  i18next@27.1.1:
+    resolution: {integrity: sha512-Qq3aJizS3RXQ30crhx9BKQLrHoa6GKpgrOJjVZ9vgj3EBxAddrmVfDNUrAMxSUimw5Jc+ld4SSZUAzf1q4nGyQ==}
+    engines: {node: '>=22'}
     peerDependencies:
       typescript: ^5 || ^6 || ^7
     peerDependenciesMeta:
@@ -4219,9 +4220,9 @@ snapshots:
       '@typescript-eslint/eslint-plugin': 8.72.1(@typescript-eslint/parser@8.72.1(@typescript/typescript6@6.0.2)(eslint@10.14.0(jiti@2.7.0)))(@typescript/typescript6@6.0.2)(eslint@10.14.0(jiti@2.7.0))
       '@typescript-eslint/parser': 8.72.1(@typescript/typescript6@6.0.2)(eslint@10.14.0(jiti@2.7.0))
 
-  '@inglorious/i18n@2.0.0(@typescript/typescript6@6.0.2)':
+  '@inglorious/i18n@2.1.0(@typescript/typescript6@6.0.2)':
     dependencies:
-      i18next: 26.6.0(@typescript/typescript6@6.0.2)
+      i18next: 27.1.1(@typescript/typescript6@6.0.2)
     transitivePeerDependencies:
       - typescript
 
@@ -5332,7 +5333,7 @@ snapshots:
       svgo: 4.1.0
       terser: 5.51.2
 
-  i18next@26.6.0(@typescript/typescript6@6.0.2):
+  i18next@27.1.1(@typescript/typescript6@6.0.2):
     optionalDependencies:
       typescript: '@typescript/typescript6@6.0.2'
 
