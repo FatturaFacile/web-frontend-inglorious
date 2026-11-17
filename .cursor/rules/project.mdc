@@ -1,0 +1,12 @@
+---
+description: Project Coding Standards & Guidelines
+globs: *
+alwaysApply: true
+---
+
+# Project Guidelines
+Refer to [AGENTS.md](../../AGENTS.md) for the project overview, coding rules, and quality gate commands.
+
+- **Stack**: TypeScript, Vite, Inglorious Forge (`@inglorious/store`, `@inglorious/web`, `@inglorious/ui`, `@inglorious/i18n`).
+- **Pattern**: Entity-Component-System (ECS). Plain entities in store, behavior and render in types, communication via `api.notify`.
+- **Quality Gates**: Always ensure `pnpm lint`, `pnpm typecheck`, `pnpm test`, and `pnpm build` pass without errors or warnings.

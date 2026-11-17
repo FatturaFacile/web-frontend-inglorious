@@ -1,0 +1,6 @@
+# Windsurf Rules
+Always adhere to the standards, architecture, and verification commands defined in AGENTS.md.
+
+- Framework: Inglorious Forge (ECS pattern with @inglorious/store, @inglorious/web, @inglorious/ui, @inglorious/i18n)
+- Strict TypeScript: No unchecked `any`, zero ESLint errors.
+- Verification: Run `pnpm lint`, `pnpm typecheck`, and `pnpm test` prior to submitting changes.
