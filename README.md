@@ -1,4 +1,8 @@
-# Fattura Facile — Web Frontend (Inglorious)
+# FatturaFacile Web Frontend (Inglorious)
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+> **Status: experimental.** This is an alternative web client to [`web-frontend`](https://github.com/FatturaFacile/web-frontend), the main one. Screens of the Angular app that are not ported yet fall through to a "not ported" page.
 
 The web frontend of **Fattura Facile**, the cross-border Italy–Switzerland invoicing and management app. It is a port of the [Angular frontend](https://github.com/FatturaFacile/web-frontend) to [Inglorious Web](https://inglorious.dev/web/) and the rest of the Inglorious ecosystem.
 
@@ -109,12 +113,13 @@ Set these through a `.env.local` file or the environment:
 
 Most smoke tests ([src/app.test.ts](src/app.test.ts)) start the whole app in jsdom against a stubbed `fetch` and use it the way a user would.
 
-## Deployment
+## CI/CD and branching
 
-Every push to `main` runs [.github/workflows/deploy.yml](.github/workflows/deploy.yml): lint, typecheck, tests and build, then the build goes live at **https://inglorious.fatturafacile.eu**.
-
-- The site is served by the dev stack on the VPS (see `deploy/dev/` in the web-api repo), with the dev API on the same origin (`/api`, `/sanctum`), so the Sanctum cookies are first-party.
-- Secrets live in the GitHub Environment `inglorious` (`DEPLOY_SSH_HOST`, `DEPLOY_SSH_USER`, `DEPLOY_SSH_KEY`, `DEPLOY_SSH_KNOWN_HOSTS`). The SSH key is restricted on the server to [deploy/server-deploy.sh](deploy/server-deploy.sh), which only replaces the site files.
+- `dev` is the default branch. Open pull requests against `dev`. `main` only receives pull requests from `dev` (the `main-source` workflow enforces it).
+- Every push to `main` runs [.github/workflows/deploy.yml](.github/workflows/deploy.yml): lint, typecheck, tests and build, then the build goes live at **https://inglorious.fatturafacile.eu**. The workflow can also be started by hand.
+- The site is served by the dev stack of the platform (see `deploy/dev/` in the `web-api` repository), with the dev API on the same origin (`/api`, `/sanctum`), so the Sanctum cookies are first-party.
+- The deploy credentials are stored in a GitHub Environment named `inglorious`. The key is restricted on the server to [deploy/server-deploy.sh](deploy/server-deploy.sh), which only replaces the site files.
+- There is no separate CI run for pull requests: run `pnpm lint`, `pnpm typecheck` and `pnpm test` before opening one.
 
 ## Project structure
 
@@ -177,6 +182,20 @@ The screenshot shows the same signed-in dashboard in both apps, each next to a L
 This is a single manual run, so it is less controlled than the table above. The Inglorious app was served from `localhost:4200` and the Angular app from [dev.fatturafacile.eu](https://dev.fatturafacile.eu), both against the real backend. The benchmark table uses the median of 5 runs on the login page, with both builds served by the same local server and the API stubbed. That is why the scores differ.
 
 Part of the size gap comes from ng-zorro and the Font Awesome webfonts rather than from Angular itself. Angular also has the advantage in maturity, ecosystem and hiring pool. [BENCHMARKS.md](BENCHMARKS.md) discusses both points. To run the benchmarks yourself, see [benchmarks/README.md](benchmarks/README.md). The build benchmarks measure the Angular app deployed at [dev.fatturafacile.eu](https://dev.fatturafacile.eu), and the source benchmarks need a local clone of it set in `ANGULAR_DIR`.
+
+## Related repositories
+
+| Repository                                                        | Relation                                       |
+| :---------------------------------------------------------------- | :--------------------------------------------- |
+| [`web-frontend`](https://github.com/FatturaFacile/web-frontend)   | The main Angular client that this app ports    |
+| [`web-api`](https://github.com/FatturaFacile/web-api)             | The backend API; its dev stack serves this app |
+| [`FatturaFacile`](https://github.com/FatturaFacile/FatturaFacile) | Organization overview and repository map       |
+
+## Documentation
+
+- [BENCHMARKS.md](BENCHMARKS.md): comparison with the Angular app
+- [inglorious.dev](https://inglorious.dev): documentation of the Inglorious libraries
+- Project wiki: [FatturaFacile/FatturaFacile wiki](https://github.com/FatturaFacile/FatturaFacile/wiki)
 
 ## License
 
